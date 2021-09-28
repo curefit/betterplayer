@@ -12,7 +12,7 @@ import androidx.work.WorkerParameters;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
-import com.google.android.exoplayer2.upstream.cache.CacheWriter;
+import com.google.android.exoplayer2.upstream.cache.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,15 +70,16 @@ public class CacheWorker extends Worker {
                 mCacheWriter = new CacheWriter(
                         cacheDataSourceFactory.createDataSource(),
                         dataSpec,
+                        true,
                         null,
                         (long requestLength, long bytesCached, long newBytesCached) -> {
-                                double completedData = ((bytesCached * 100f) / preCacheSize);
-                                if (completedData >= mLastCacheReportIndex * 10) {
-                                    mLastCacheReportIndex += 1;
-                                    Log.d(TAG, "Completed pre cache of " + url + ": " + (int) completedData + "%");
-                                }
+                            double completedData = ((bytesCached * 100f) / preCacheSize);
+                            if (completedData >= mLastCacheReportIndex * 10) {
+                                mLastCacheReportIndex += 1;
+                                Log.d(TAG, "Completed pre cache of " + url + ": " + (int) completedData + "%");
                             }
-                        );
+                        }
+                );
 
                 mCacheWriter.cache();
             } else {

@@ -105,7 +105,7 @@ final class BetterPlayer {
     private PlayerNotificationManager playerNotificationManager;
     private Handler refreshHandler;
     private Runnable refreshRunnable;
-    private ExoPlayer.Listener exoPlayerEventListener;
+    private Player.EventListener exoPlayerEventListener;
     private Bitmap bitmap;
     private MediaSessionCompat mediaSession;
     private DrmSessionManager drmSessionManager;
@@ -336,10 +336,10 @@ final class BetterPlayer {
             }
         }
 
-        playerNotificationManager = new PlayerNotificationManager.Builder(context,
-                NOTIFICATION_ID,
+        playerNotificationManager = new PlayerNotificationManager(context,
                 playerNotificationChannelName,
-                mediaDescriptionAdapter).build();
+                NOTIFICATION_ID,
+                mediaDescriptionAdapter);
         playerNotificationManager.setPlayer(exoPlayer);
         playerNotificationManager.setUseNextAction(false);
         playerNotificationManager.setUsePreviousAction(false);
@@ -373,7 +373,7 @@ final class BetterPlayer {
             refreshHandler.postDelayed(refreshRunnable, 0);
         }
 
-        exoPlayerEventListener = new Player.Listener() {
+        exoPlayerEventListener = new Player.EventListener() {
             @Override
             public void onPlaybackStateChanged(int playbackState) {
                 mediaSession.setMetadata(new MediaMetadataCompat.Builder()
@@ -565,10 +565,10 @@ final class BetterPlayer {
         exoPlayer.setVideoSurface(surface);
         setAudioAttributes(exoPlayer, true);
 
-        exoPlayer.addListener(new Player.Listener() {
+        exoPlayer.addListener(new Player.EventListener() {
             @Override
             public void onPlaybackStateChanged(int playbackState) {
-                
+
                 if (playbackState == Player.STATE_BUFFERING) {
                     sendBufferingUpdate(true);
                     Map<String, Object> event = new HashMap<>();
@@ -907,10 +907,10 @@ final class BetterPlayer {
             dataBuilder.putString(BetterPlayerPlugin.HEADER_PARAMETER + headerKey, headers.get(headerKey));
         }
 
-        OneTimeWorkRequest cacheWorkRequest = new OneTimeWorkRequest.Builder(CacheWorker.class)
-                .addTag(dataSource)
-                .setInputData(dataBuilder.build()).build();
-        WorkManager.getInstance(context).enqueue(cacheWorkRequest);
+//        OneTimeWorkRequest cacheWorkRequest = new OneTimeWorkRequest.Builder(CacheWorker.class)
+//                .addTag(dataSource)
+//                .setInputData(dataBuilder.build()).build();
+//        WorkManager.getInstance(context).enqueue(cacheWorkRequest);
         result.success(null);
     }
 
@@ -957,6 +957,3 @@ final class BetterPlayer {
     }
 
 }
-
-
-
