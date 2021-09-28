@@ -14,13 +14,14 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
+  s.swift_version = '5.0'
   s.dependency 'Flutter'
   s.dependency 'Cache', '~> 6.0.0'
   s.dependency 'HLSCachingReverseProxyServer'
   s.script_phases = { :name => "Generate UnzipKit Swift Header",
   :script => "\"${PODS_TARGET_SRCROOT}\"/Scripts/generate-swift-import-header.sh",
   :execution_position => :before_compile }
-    
+
   s.platform = :ios, '11.0'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
 end
