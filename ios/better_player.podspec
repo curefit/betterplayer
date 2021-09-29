@@ -14,6 +14,7 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
+  s.private_header_files = 'Classes/Private/**/*.h'
   s.swift_version = '5.0'
   s.dependency 'Flutter'
   s.dependency 'Cache', '~> 6.0.0'
