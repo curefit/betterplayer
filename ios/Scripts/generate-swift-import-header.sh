@@ -18,4 +18,3 @@ _Import_text="
 #endif /* GeneratedSwiftImport_h */
 "
 echo "$_Import_text" > ${PODS_TARGET_SRCROOT}/Classes/GeneratedSwiftImport.h
-
